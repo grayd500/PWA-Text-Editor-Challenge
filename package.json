@@ -1,0 +1,24 @@
+{
+  "name": "JATE",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "concurrently \"npm:server\" \"npm:client\"",
+    "server": "nodemon ./server/server.js",
+    "client": "npm start --prefix client",
+    "install-client": "npm install --prefix client",
+    "build-client": "npm run build --prefix client"
+  },  
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "if-env": "^1.0.4"
+  },
+  "devDependencies": {
+    "concurrently": "^5.2.0",
+    "nodemon": "^2.0.4"
+  }
+}
