@@ -1,3 +1,4 @@
+// client/src/js.index.js:
 import { Workbox } from 'workbox-window';
 import Editor from './editor';
 import './database';
