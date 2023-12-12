@@ -1,3 +1,4 @@
+// client/src/js/database.js:
 import { openDB } from 'idb';
 
 // Initialize the database
@@ -19,18 +20,23 @@ const initdb = async () => {
 };
 
 // Add logic to a method that accepts some content and adds it to the database
-export const putDb = async (content) => {
+// Get the last record from the database
+export const getDb = async () => {
   try {
     const jateDb = await openDB('jate', 1);
-    const tx = jateDb.transaction('jate', 'readwrite');
+    const tx = jateDb.transaction('jate', 'readonly');
     const store = tx.objectStore('jate');
-    const request = store.put({ id: 1, jate: content });
-    const result = await request;
-    console.log('🚀 - data saved to the database', result);
+    const getAllKeysRequest = store.getAllKeys();
+    const keys = await getAllKeysRequest;
+    const lastKey = keys.at(-1); // Get the last key (most recent entry)
+    const result = await store.get(lastKey);
+    console.log('Data fetched from the database', result);
+    return result?.jate;
   } catch (error) {
-    console.error('Error putting data in the database', error);
+    console.error('Error getting data from the database', error);
   }
 };
+
 
 // Add logic for a method that gets the content from the database
 export const getDb = async () => {

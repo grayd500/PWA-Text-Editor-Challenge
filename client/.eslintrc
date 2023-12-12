@@ -1,19 +1,6 @@
+// client/.eslintrc:
 {
-  "parserOptions": {
-    "ecmaVersion": 2020, // Updated to ECMAScript 2020
-    "sourceType": "module"
-  },
-  "env": {
-    "browser": true
-  },
-  "rules": {
-    "no-console": "off",
-    "eqeqeq": "warn",
-    "strict": "off",
-    "import/no-extraneous-dependencies": "off",
-    "import/prefer-default-export": "off",
-    "no-underscore-dangle": "off",
-    "no-restricted-globals": "off"
-  }
+  "extends": "../.eslintrc.js"
 }
+
 
