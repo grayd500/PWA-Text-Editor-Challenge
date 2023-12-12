@@ -9,7 +9,7 @@ const { InjectManifest } = require('workbox-webpack-plugin');
 
 module.exports = () => {
   return {
-    mode: 'development',
+    mode: 'production',
     entry: {
       main: './src/js/index.js',
       install: './src/js/install.js'
@@ -20,14 +20,13 @@ module.exports = () => {
       publicPath: '/',
     },    
     plugins: [
-      //🆕
       new HtmlWebpackPlugin({
         template: './index.html',
         title: 'JATE',
       }),
       new InjectManifest({
         swSrc: './src-sw.js',
-        swDest: 'service-worker.js',
+        swDest: 'src-sw.js',
       }),
       new WebpackPwaManifest({
         fingerprints: false,
@@ -46,7 +45,7 @@ module.exports = () => {
             destination: path.join('assets', 'icons'),
           },
         ],
-      }),
+      }), // Closing bracket added here
     ],
     module: {
       rules: [
@@ -61,6 +60,10 @@ module.exports = () => {
             loader: 'babel-loader',
             options: {
               presets: ['@babel/preset-env'],
+              plugins: [
+                '@babel/plugin-proposal-object-rest-spread',
+                '@babel/transform-runtime',
+              ], // Closing bracket added here
             },
           },
         },
