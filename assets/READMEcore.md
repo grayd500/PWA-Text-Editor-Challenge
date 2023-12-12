@@ -24,13 +24,13 @@ WHEN I run `npm run start` from the root directory
 ✅THEN I find that my application should start up the backend and serve the client
 
 WHEN I run the text editor application from my terminal
-🚧THEN I find that my JavaScript files have been bundled using webpack
+✅THEN I find that my JavaScript files have been bundled using webpack
 
 WHEN I run my webpack plugins
-🚧THEN I find that I have a generated HTML file, service worker, and a manifest file
+✅THEN I find that I have a generated HTML file, service worker, and a manifest file
 
 WHEN I use next-gen JavaScript in my application
-🚧THEN I find that the text editor still functions in the browser without errors
+✅THEN I find that the text editor still functions in the browser without errors
 
 WHEN I open the text editor
 🚧THEN I find that IndexedDB has immediately created a database storage

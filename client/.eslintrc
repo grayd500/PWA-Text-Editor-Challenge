@@ -1,9 +1,13 @@
 {
+  "parserOptions": {
+    "ecmaVersion": 2020, // Updated to ECMAScript 2020
+    "sourceType": "module"
+  },
   "env": {
     "browser": true
   },
   "rules": {
-    // Override our default settings just for this directory
+    "no-console": "off",
     "eqeqeq": "warn",
     "strict": "off",
     "import/no-extraneous-dependencies": "off",
@@ -12,3 +16,4 @@
     "no-restricted-globals": "off"
   }
 }
+

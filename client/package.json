@@ -1,10 +1,9 @@
 {
   "name": "JATE",
   "scripts": {
-    "dev": "webpack-dev-server",
+    "dev": "webpack serve --mode development --open",
     "build": "webpack --mode production",
-    "start": "webpack-dev-server --mode development --open --hot",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "webpack serve --mode development --open"
   },
   "author": "2U",
   "license": "UNLICENSED",

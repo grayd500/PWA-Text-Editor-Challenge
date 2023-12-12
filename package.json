@@ -4,21 +4,24 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "concurrently \"npm:server\" \"npm:client\"",
+    "start": "node ./server/server.js",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
     "server": "nodemon ./server/server.js",
     "client": "npm start --prefix client",
     "install-client": "npm install --prefix client",
     "build-client": "npm run build --prefix client"
-  },  
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
+    "idb": "^8.0.0",
     "if-env": "^1.0.4"
   },
   "devDependencies": {
     "concurrently": "^5.2.0",
+    "eslint": "^8.55.0",
     "nodemon": "^2.0.4"
   }
 }
