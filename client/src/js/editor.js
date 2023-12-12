@@ -1,48 +1,59 @@
-// client/src/js/editor.js:
+// editor.js
+
 // Importing methods to interact with the indexedDB database from './database.js'
 import { getDb, putDb } from './database';
 // Importing the 'header' variable from './header.js'
 import { header } from './header';
 
-// Creating a class for handling the CodeMirror editor and data interactions
-export default class {
+// Editor class to handle the CodeMirror editor and data interactions
+export default class Editor {
   constructor() {
-    // Retrieving data from localStorage
+    // Attempt to retrieve any previously saved data from localStorage
     const localData = localStorage.getItem('content');
 
-    // Checking if CodeMirror is loaded
+    // Check if CodeMirror is available in the global scope
     if (typeof CodeMirror === 'undefined') {
-      // Throwing an error if CodeMirror is not loaded
+      // If CodeMirror is not found, throw an error to halt execution
       throw new Error('CodeMirror is not loaded');
     }
 
-    // Initializing CodeMirror editor with specified options
+    // Initialize the CodeMirror editor with options for JavaScript editing
     this.editor = CodeMirror(document.querySelector('#main'), {
-      value: '',
-      mode: 'javascript',
-      theme: 'monokai',
-      lineNumbers: true,
-      lineWrapping: true,
-      autofocus: true,
-      indentUnit: 2,
-      tabSize: 2,
+      value: localData || header, // Set the initial value to localData or header if localData is null
+      mode: 'javascript', // Set the language mode to JavaScript
+      theme: 'monokai', // Set the editor theme
+      lineNumbers: true, // Display line numbers
+      lineWrapping: true, // Wrap lines that are too long
+      autofocus: true, // Automatically focus the editor
+      indentUnit: 2, // Set the number of spaces for indentation
+      tabSize: 2, // Set the width of a tab character
     });
 
     // When the editor is ready, set its value from indexedDB, localStorage, or use the default 'header' value
-    getDb().then((data) => {
-      console.info('Loaded data from IndexedDB, injecting into editor');
-      this.editor.setValue(data || localData || header);
-    });
+getDb().then((data) => {
+  // Now 'data' is guaranteed to be a string.
+  console.info('Loaded data from IndexedDB, injecting into editor');
+  this.editor.setValue(data || localData || header);
+}).catch((err) => {
+  // If there's an error, log it and use 'header' as a fallback.
+  console.error('Failed to load data from IndexedDB:', err);
+  this.editor.setValue(localData || header);
+});
 
-    // Saving the content of the editor to localStorage on every change
+    // Add a change event listener to the editor
     this.editor.on('change', () => {
+      // Save the current content of the editor to localStorage whenever a change is made
       localStorage.setItem('content', this.editor.getValue());
     });
 
-    // Saving the content of the editor to indexedDB when the editor loses focus
+    // Add a blur event listener to the editor
     this.editor.on('blur', () => {
+      // Log when the editor loses focus
       console.log('The editor has lost focus');
-      putDb(localStorage.getItem('content'));
+      // Retrieve the current content of the editor
+      const editorValue = this.editor.getValue();
+      // Save the content to IndexedDB using putDb
+      putDb(editorValue);
     });
   }
 }

@@ -34,22 +34,19 @@ export const putDb = async (content) => {
   console.log('Data saved to the database', result);
 };
 
-// Add logic for a method that retrieves all content from the database
+// Ensure the getDb function returns a string.
 export const getDb = async () => {
   console.log('GET from the database');
-  // Connect to the 'jate' database with version 1
-  const jateDB = await openDB('jate', 1);
-  // Create a new transaction for read-only privileges
-  const tx = jateDB.transaction('jate', 'readonly');
-  // Open the desired object store
+  const jateDb = await openDB('jate', 1);
+  const tx = jateDb.transaction('jate', 'readonly');
   const store = tx.objectStore('jate');
-  // Get all data from the object store
-  const request = store.getAll();
-  // Get confirmation of the request
+  const request = store.get(1);
   const result = await request;
-  console.log(result);
-  return result;
+  console.log('Data retrieved from the database', result);
+  // Only return result.value if it's a string, otherwise return an empty string.
+  return typeof result?.value === 'string' ? result.value : '';
 };
+
 
 // Initialize the database when the script is run
 initdb();
